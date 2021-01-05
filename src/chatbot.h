@@ -36,8 +36,6 @@ public:
     ChatBot(ChatBot &&); //Move constructor
     ChatBot &operator=(ChatBot &&); // Move assignment operator
 
-    ChatLogic *GetChatLogicHandle() { return _chatLogic; }
-
     ////
     //// EOF STUDENT CODE
 
