@@ -55,7 +55,7 @@ ChatBot::ChatBot(ChatBot & src)
 }
 
 ChatBot& ChatBot::operator=(ChatBot & src) {
-    std::cout << "ChatBot Copy Assignment Constructor" << std::endl;
+    std::cout << "ChatBot Copy Assignment Operator" << std::endl;
     if(this == &src)
         return *this;
     *_image = *src._image;
@@ -76,7 +76,7 @@ ChatBot::ChatBot(ChatBot && src)
 }
 
 ChatBot& ChatBot::operator=(ChatBot && src) {
-    std::cout << "ChatBot Move Assignment Constructor" << std::endl;
+    std::cout << "ChatBot Move Assignment Operator" << std::endl;
     if(this == &src)
         return *this;
     _image = src._image;
