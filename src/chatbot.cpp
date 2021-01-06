@@ -48,7 +48,11 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(ChatBot & src)
 {
     std::cout << "ChatBot Copy Constructor" << std::endl;
-    *_image = *src._image;
+
+    //_image = (wxBitmap *)malloc(sizeof(wxBitmap));
+    //*_image = *src._image;
+    _image = new wxBitmap(*src._image);
+
     _currentNode = src._currentNode;
     _rootNode = src._rootNode;
     _chatLogic = src._chatLogic;
@@ -58,32 +62,46 @@ ChatBot& ChatBot::operator=(ChatBot & src) {
     std::cout << "ChatBot Copy Assignment Operator" << std::endl;
     if(this == &src)
         return *this;
-    *_image = *src._image;
+
+    //_image = (wxBitmap *)malloc(sizeof(wxBitmap));
+    //*_image = *src._image;
+    _image = new wxBitmap(*src._image);
+
     _currentNode = src._currentNode;
     _rootNode = src._rootNode;
     _chatLogic = src._chatLogic;
     return *this;
 }
 
-ChatBot::ChatBot(ChatBot && src)
+ChatBot::ChatBot(ChatBot &&src)
 {
     std::cout << "ChatBot Move Constructor" << std::endl;
     _image = src._image;
-    src._image = nullptr;
     _currentNode = src._currentNode;
     _rootNode = src._rootNode;
     _chatLogic = src._chatLogic;
+
+    src._image = nullptr;
+    src._currentNode = nullptr;
+    src._rootNode = nullptr;
+    src._chatLogic = nullptr;
 }
 
-ChatBot& ChatBot::operator=(ChatBot && src) {
+ChatBot &ChatBot::operator=(ChatBot &&src) {
     std::cout << "ChatBot Move Assignment Operator" << std::endl;
     if(this == &src)
         return *this;
+
     _image = src._image;
-    src._image = nullptr;
     _currentNode = src._currentNode;
     _rootNode = src._rootNode;
     _chatLogic = src._chatLogic;
+
+    src._image = nullptr;
+    src._currentNode = nullptr;
+    src._rootNode = nullptr;
+    src._chatLogic = nullptr;
+
     return *this;
 }
 
@@ -134,6 +152,9 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::mt19937 generator(int(std::time(0)));
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
+
+    // Notify address change to ChatLogic so it can track the latest address.
+    _chatLogic->SetChatbotHandle(this);
 
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);

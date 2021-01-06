@@ -7,14 +7,7 @@ GraphNode::GraphNode(int id)
     _id = id;
 }
 
-GraphNode::~GraphNode()
-{
-    //// STUDENT CODE
-    ////
-
-    ////
-    //// EOF STUDENT CODE
-}
+GraphNode::~GraphNode(){}
 
 void GraphNode::AddToken(std::string token)
 {
@@ -33,10 +26,10 @@ void GraphNode::AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge)
 
 //// STUDENT CODE
 ////
-void GraphNode::MoveChatbotHere(std::unique_ptr<ChatBot> chatbot)
+void GraphNode::MoveChatbotHere(ChatBot chatbot)
 {
     _chatBot = std::move(chatbot);
-    _chatBot->SetCurrentNode(this);
+    _chatBot.SetCurrentNode(this);
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
